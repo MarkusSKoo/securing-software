@@ -1,26 +1,17 @@
-<h2>Uusi resepti</h2>
-<form action="/create_recipe" method="post">
+<!DOCTYPE html>
+<html>
+
+<h1>New comment</h1>
+<form action="/create_comment" method="post">
   <p>
-    <label for="title">Otsikko:</label> <br />
+    <label for="title">Title:</label> <br />
     <input type="text" name="title" id="title" required maxlength="50"/>
   </p>
   <p>
-    <label for="description">Kuvaus:</label> <br />
+    <label for="description">Description:</label> <br />
     <textarea name="description" id="description" rows="8" cols="60" required maxlength="1000"></textarea>
   </p>
-  {% for class in classes %}
-  <p>
-    <label for="class{{ class }}">{{ class }}</label>: <br />
-    <select name="classes" id="class{{ class }}" required>
-      <option value="" disabled selected>(valitse)</option>
-    {% for option in classes[class] %}
-      <option value="{{ class }}:{{ option }}"> {{ option }}</option>
-    {% endfor %}
-  </select>
-  </p>
-  {% endfor %}
-  <p>
-    <label for="ingredients">Ainekset:</label> <br />
-    <textarea name="ingredients" id="ingredients" rows="8" cols="60" required maxlength="1000"></textarea>
-  </p>
-  <p>
+
+</body>
+
+</html>
