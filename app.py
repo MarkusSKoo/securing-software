@@ -1,7 +1,11 @@
 import secrets
 from flask import Flask, render_template, abort, request, session, flash, redirect
+import users
+import config
+import comments
 
 app = Flask(__name__)
+app.secret_key = config.secret_key
 
 def check_csrf():
     if "csrf_token" not in request.form:
@@ -11,7 +15,9 @@ def check_csrf():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    comments_list = comments.get_comments()
+    return render_template("index.html", comments=comments_list)
+
 
 @app.route("/register")
 def register():
@@ -25,30 +31,22 @@ def create():
     password2 = request.form["password2"]
 
     if not username or not password1 or not password2:
-        flash("VIRHE: kaikki kentät ovat pakollisia")
+        flash("ERROR: fill all fields")
         return redirect("/register")
 
     if password1 != password2:
-        flash("VIRHE: salasanat eivät ole samat")
+        flash("ERROR: passwords do not match")
         return redirect("/register")
 
     if len(password1) < 8 or len(password1) > 50:
-        flash("VIRHE: salasanan tulee olla 8-50 merkkiä pitkä")
-        return redirect("/register")
-
-    if len(username) > 20:
-        flash("VIRHE: käyttäjänimi on liian pitkä")
-        return redirect("/register")
-
-    if not username.isalnum():
-        flash("VIRHE: käyttäjänimi saa sisältää vain kirjaimia ja numeroita")
+        flash("ERROR: password must beb 8-50 charachters")
         return redirect("/register")
 
     if not users.create_user(username, password1):
-        flash("VIRHE: tunnus on jo varattu")
+        flash("ERROR: username not available")
         return redirect("/register")
 
-    flash("Tunnus luotu")
+    flash("Registration succesful")
     return redirect("/login")
 
 @app.route("/login", methods=["GET", "POST"])
@@ -67,7 +65,7 @@ def login():
             session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
-            flash("VIRHE: väärä tunnus tai salasana")
+            flash("ERROR: wrong username or password")
             return redirect("/login")
         
 @app.route("/logout")
@@ -75,4 +73,28 @@ def logout():
     if "user_id" in session:
         del session["user_id"]
         del session["username"]
+    return redirect("/")
+
+@app.route("/new_comment")
+def new_comment():
+    if "user_id" not in session:
+        flash("ERROR: log in first")
+        return redirect("/login")
+    return render_template("new_comment.html")
+
+
+@app.route("/create_comment", methods=["POST"])
+def create_comment():
+    check_csrf()
+    if "user_id" not in session:
+        abort(403)
+
+    comment = request.form["comment"]
+
+    if not comment:
+        flash("ERROR: comment can not be empty")
+        return redirect("/new_comment")
+
+    comments.create_comment(session["user_id"], comment)
+    flash("Comment created")
     return redirect("/")

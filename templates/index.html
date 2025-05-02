@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-
 <body>
     <h1>Message app</h1>
+
     {% if session.user_id %}
     <p>
       You have logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
     </p>
     {% endif %}
-  
+
     <p>
       <a href="/">Front page</a>
       {% if session.user_id %}
@@ -21,11 +21,20 @@
     </p>
 
     {% for message in get_flashed_messages() %}
-  <div class="info">
-    {{ message }}
-  </div>
-  {% endfor %}
+    <div class="info">
+        {{ message }}
+    </div>
+    {% endfor %}
 
+    <h2>Comments</h2>
+    {% if comments %}
+        <ul>
+        {% for comment in comments %}
+            <li><strong>{{ comment.username }}:</strong> {{ comment.comment }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments yet.</p>
+    {% endif %}
 </body>
-
 </html>

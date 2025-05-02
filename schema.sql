@@ -7,6 +7,5 @@ CREATE TABLE users (
 CREATE TABLE comments (
     id INTEGER PRIMARY KEY,
     comment TEXT,
-    user_id INTEGER REFERENCES users,
-    comment TEXT
+    user_id INTEGER REFERENCES users
 );
