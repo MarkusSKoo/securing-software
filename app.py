@@ -85,7 +85,7 @@ def new_comment():
 
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
-    check_csrf()
+#    check_csrf()
     if "user_id" not in session:
         abort(403)
 
