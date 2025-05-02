@@ -2,8 +2,10 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import db
 
 def check_login(username, password):
-    sql = "SELECT id, password_hash FROM users WHERE username = ?"
-    result = db.query(sql, [username])
+    sql = f"SELECT id, password_hash FROM users WHERE username = '{username}'"
+    result = db.query(sql)
+#    sql = "SELECT id, password_hash FROM users WHERE username = ?"
+#    result = db.query(sql, [username])
     if not result:
         return None
 
