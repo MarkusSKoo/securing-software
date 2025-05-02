@@ -77,17 +77,17 @@ def logout():
 
 @app.route("/new_comment")
 def new_comment():
-    if "user_id" not in session:
-        flash("ERROR: log in first")
-        return redirect("/login")
+#    if "user_id" not in session:
+#        flash("ERROR: log in first")
+#        return redirect("/login")
     return render_template("new_comment.html")
 
 
 @app.route("/create_comment", methods=["POST"])
 def create_comment():
 #    check_csrf()
-    if "user_id" not in session:
-        abort(403)
+#    if "user_id" not in session:
+#        abort(403)
 
     comment = request.form["comment"]
 
