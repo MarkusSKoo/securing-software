@@ -3,7 +3,7 @@
 
 <h1>New comment</h1>
 <form action="/create_comment" method="post">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<!--     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"> -->
   <p>
     <label for="comment">Comment:</label> <br />
     <textarea name="comment" id="comment" rows="8" cols="60" required maxlength="1000"></textarea>
