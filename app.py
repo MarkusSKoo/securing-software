@@ -34,9 +34,9 @@ def create():
         flash("ERROR: fill all fields")
         return redirect("/register")
 
-    if password1 != password2:
-        flash("ERROR: passwords do not match")
-        return redirect("/register")
+#    if password1 != password2:
+#        flash("ERROR: passwords do not match")
+#        return redirect("/register")
 
     if len(password1) < 8 or len(password1) > 50:
         flash("ERROR: password must beb 8-50 charachters")
@@ -98,3 +98,4 @@ def create_comment():
     comments.create_comment(session["user_id"], comment)
     flash("Comment created")
     return redirect("/")
+

@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
 <h1>New comment</h1>
 <form action="/create_comment" method="post">
 <!--     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"> -->
