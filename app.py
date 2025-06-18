@@ -77,9 +77,9 @@ def logout():
 
 @app.route("/new_comment")
 def new_comment():
-#    if "user_id" not in session:
-#        flash("ERROR: log in first")
-#        return redirect("/login")
+    if "user_id" not in session:
+        flash("ERROR: log in first")
+        return redirect("/login")
     return render_template("new_comment.html")
 
 
@@ -98,4 +98,8 @@ def create_comment():
     comments.create_comment(session["user_id"], comment)
     flash("Comment created")
     return redirect("/")
+
+if __name__ == "__main__":
+    app.run(debug=True)
+#    app.run(debug=False)
 
