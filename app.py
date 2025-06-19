@@ -3,6 +3,7 @@ from flask import Flask, render_template, abort, request, session, flash, redire
 import users
 import config
 import comments
+import re
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -38,9 +39,19 @@ def create():
 #        flash("ERROR: passwords do not match")
 #        return redirect("/register")
 
-    if len(password1) < 8 or len(password1) > 50:
-        flash("ERROR: password must beb 8-50 charachters")
-        return redirect("/register")
+#    if len(password1) < 8 or len(password1) > 50:
+#        flash("ERROR: password must beb 8-50 charachters")
+#        return redirect("/register")
+
+#    if not re.search(r"[0-9]", password1):
+#        flash("ERROR: password must contain at least one digit")
+
+#    if not re.search(r"[A-Z]", password1):
+#        flash("ERROR: password must contain at least one uppercase letter")
+#        return redirect("/register")
+
+#    if not re.search(r"[a-z]", password1):
+#        flash("ERROR: password must contain at least one lowercase letter")
 
     if not users.create_user(username, password1):
         flash("ERROR: username not available")
